@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CookieService } from 'ngx-cookie-service';
+import { SocketWebService } from './services/socket-web.service';
+
 import { HomeComponent } from './components/home/home.component';
 import { RoomComponent } from './components/room/room.component';
 import { DrawComponent } from './components/draw/draw.component';
@@ -28,6 +30,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule
   ],
   providers: [
+    SocketWebService,
     CookieService,
   ],
   bootstrap: [

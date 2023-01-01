@@ -1,1 +1,3 @@
 <p>room works!</p>
+<h3>{{ room }}</h3>
+<h4 *ngIf="ServerTime" >Server Time {{ ServerTime | date: 'fullTime' }}</h4>
