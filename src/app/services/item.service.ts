@@ -10,6 +10,7 @@ import { Car } from '../interfaces/item.interface';
 export class ItemService {
 
   private readonly apiURL: string = 'http://localhost:3002/item';
+  // private readonly apiURL: string = 'http://ec2-100-26-118-4.compute-1.amazonaws.com:3002/item';
 
   constructor(private http: HttpClient) { }
 

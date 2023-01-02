@@ -13,6 +13,7 @@ export class SocketWebService extends Socket {
     super(
       {
         url: 'http://localhost:3002',
+        // url: 'http://ec2-100-26-118-4.compute-1.amazonaws.com:3002',
         options: {
           withCredentials: true,
           extraHeaders: {
