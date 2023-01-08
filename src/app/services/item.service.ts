@@ -3,26 +3,26 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Response } from '../interfaces/response.interface';
 import { Car } from '../interfaces/item.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
 
-  private readonly apiURL: string = 'http://localhost:3002/item';
-  // private readonly apiURL: string = 'http://ec2-100-26-118-4.compute-1.amazonaws.com:3002/item';
+  private readonly apiURL: string = 'item';
 
   constructor(private http: HttpClient) { }
 
   // fech items
   getItems(size: number = 25): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}?limit=${size}`).pipe(
+    return this.http.get<any>(`${environment.apiUrl}/${this.apiURL}?limit=${size}`).pipe(
       map(response => this.processResponse(response)));
   }
 
   // fetch specific item
   getItem(id: string = ""): Observable<any> {
-    const url = `${this.apiURL}/${id}` ;
+    const url = `${this.apiURL}/${id}`;
     console.log(`Get item '${url}'`);
     return this.http.get<any>(url).pipe(
       map(response => this.processResponse(response)));
@@ -36,7 +36,7 @@ export class ItemService {
         color: car.color,
         gas: car.gas,
         year: car.year,
-        price: car.price*1.15,
+        price: car.price * 1.15,
         description: car.description || "No description available"
       }))
     };

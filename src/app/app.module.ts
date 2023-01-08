@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 
@@ -13,6 +15,7 @@ import { DrawComponent } from './components/draw/draw.component';
 import { ItemsComponent } from './components/items/items.component';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,11 +25,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     DrawComponent,
     ItemsComponent,
     ItemDetailsComponent,
+    LoginComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    BrowserModule,
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [
     SocketWebService,

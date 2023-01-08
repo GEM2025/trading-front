@@ -4,12 +4,17 @@ import { HomeComponent } from './components/home/home.component';
 import { RoomComponent } from './components/room/room.component';
 import { ItemsComponent } from './components/items/items.component';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   {
-     path: 'room/:room',
-     component: RoomComponent
-   },
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'room/:room',
+    component: RoomComponent
+  },
   {
     path: 'items',
     component: ItemsComponent
