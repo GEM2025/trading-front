@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { createPopper } from "@popperjs/core";
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +8,12 @@ import { createPopper } from "@popperjs/core";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title: string = 'Crypto Catalog';
   dateTime: Date;
 
   /**
    *
    */
-  constructor() {
+  constructor(public authService: AuthService) {
     this.dateTime = new Date();
   }
 
@@ -23,6 +23,10 @@ export class AppComponent implements OnInit {
       this.dateTime = new Date();
     }, 1000);
 
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
 }

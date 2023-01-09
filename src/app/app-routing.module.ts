@@ -5,6 +5,7 @@ import { RoomComponent } from './components/room/room.component';
 import { ItemsComponent } from './components/items/items.component';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 import { LoginComponent } from './components/login/login.component';
+import { VigilanteGuard } from './vigilante.guard';
 
 const routes: Routes = [
   {
@@ -13,19 +14,23 @@ const routes: Routes = [
   },
   {
     path: 'room/:room',
-    component: RoomComponent
+    component: RoomComponent,
+    canActivate: [VigilanteGuard]
   },
   {
     path: 'items',
-    component: ItemsComponent
+    component: ItemsComponent,
+    canActivate: [VigilanteGuard]
   },
   {
     path: 'item/:id',
-    component: ItemDetailsComponent
+    component: ItemDetailsComponent,
+    canActivate: [VigilanteGuard]
   },
   {
     path: '**', // localhost:4200
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [VigilanteGuard]
   },
 
 ];

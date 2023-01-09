@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  title: string = 'CTX';
+  subtitle: string = 'Condor Trading Exchange';
   loginForm: FormGroup;
   loading: boolean = false;
   submitted: boolean = false;
@@ -23,15 +25,15 @@ export class LoginComponent implements OnInit {
     console.log("LoginComponent constructor");
 
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
 
     // redirect to home if already logged in
-    if (this.authService.isLoggedIn()) {
-      console.log("User Logged In already");
-      this.router.navigate(['/home']);
-    }
+    // if (this.authService.isLoggedIn$()) {
+    //   console.log("User Logged In already");
+    //   this.router.navigate(['/home']);
+    // }
   }
 
   ngOnInit(): void {
@@ -48,16 +50,31 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    console.log(`Logging-in ${this.formControls['email'].value}`);
+
     this.loading = true;
-    this.authService.login(this.formControls['username'].value, this.formControls['password'].value)
-      .subscribe(
-        data => {
-          this.router.navigate(['/home']);
-        },
-        error => {
-          this.error = error;
-          this.loading = false;
-        });
+    this.authService.login(this.formControls['email'].value, this.formControls['password'].value).subscribe({
+      next: (value) => {
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.error(`error ${error}`);
+        this.loading = false;
+      },
+      complete: () => {
+        console.log('Completed');
+        this.loading = false;
+      }
+    });
+
+      // .subscribe(
+      //   data => {
+      //     this.router.navigate(['/home']);
+      //   },
+      //   error => {
+      //     this.error = error;
+      //     this.loading = false;
+      //   });
 
   }
 
