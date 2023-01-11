@@ -2,28 +2,28 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Response } from '../interfaces/response.interface';
-import { Car } from '../interfaces/item.interface';
 import { environment } from 'src/environments/environment';
+import { Symbol } from '../interfaces/symbol.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ItemService {
+export class SymbolService {
 
-  private readonly apiURL: string = 'item';
+  private readonly apiURL: string = 'symbol';
 
   constructor(private http: HttpClient) { }
 
-  // fech items
-  getItems(size: number = 25): Observable<any> {
+  // fech symbols
+  getSymbols(size: number = 25): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/${this.apiURL}?limit=${size}`).pipe(
       map(response => this.processResponse(response)));
   }
 
-  // fetch specific item
-  getItem(id: string = ""): Observable<any> {
-    const url = `${this.apiURL}/${id}`;
-    console.log(`Get item '${url}'`);
+  // fetch specific symbol
+  getSymbol(id: string = ""): Observable<any> {
+    const url = `${environment.apiUrl}/${this.apiURL}/${id}`;
+    console.log(`Get symbol '${url}'`);
     return this.http.get<any>(url).pipe(
       map(response => this.processResponse(response)));
   }
@@ -31,13 +31,13 @@ export class ItemService {
   private processResponse(response: Response): Response {
     return {
       info: { ...response.info },
-      results: response.results.map((car: any) => (<Car>{
-        id: car._id,
-        color: car.color,
-        gas: car.gas,
-        year: car.year,
-        price: car.price * 1.15,
-        description: car.description || "No description available"
+      results: response.results.map((symbol: any) => (<Symbol>{
+        id: symbol._id,
+        name: symbol.name,
+        exchange: symbol.exchange,
+        description: symbol.description || "No description available",
+        bid: symbol.bid,
+        ask: symbol.ask
       }))
     };
   }

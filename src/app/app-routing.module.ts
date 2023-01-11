@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { RoomComponent } from './components/room/room.component';
-import { ItemsComponent } from './components/items/items.component';
-import { ItemDetailsComponent } from './components/item-details/item-details.component';
+import { SymbolsComponent } from './components/symbols/symbols.component';
+import { SymbolDetailsComponent } from './components/symbol-details/symbol-details.component';
 import { LoginComponent } from './components/login/login.component';
 import { VigilanteGuard } from './vigilante.guard';
+import { ExchangesComponent } from './components/exchanges/exchanges.component';
+import { ExchangeDetailsComponent } from './components/exchange-details/exchange-details.component';
 
 const routes: Routes = [
   {
@@ -18,13 +20,23 @@ const routes: Routes = [
     canActivate: [VigilanteGuard]
   },
   {
-    path: 'items',
-    component: ItemsComponent,
+    path: 'exchanges',
+    component: ExchangesComponent,
     canActivate: [VigilanteGuard]
   },
   {
-    path: 'item/:id',
-    component: ItemDetailsComponent,
+    path: 'exchange/:id',
+    component: ExchangeDetailsComponent,
+    canActivate: [VigilanteGuard]
+  },
+  {
+    path: 'symbols',
+    component: SymbolsComponent,
+    canActivate: [VigilanteGuard]
+  },
+  {
+    path: 'symbol/:id',
+    component: SymbolDetailsComponent,
     canActivate: [VigilanteGuard]
   },
   {

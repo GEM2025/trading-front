@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Response } from 'src/app/interfaces/response.interface';
-import { ItemService } from 'src/app/services/item.service';
+import { SymbolService } from 'src/app/services/symbol.service';
 
 @Component({
-  selector: 'app-item-details',
-  templateUrl: './item-details.component.html',
-  styleUrls: ['./item-details.component.css']
+  selector: 'app-symbol-details',
+  templateUrl: './symbol-details.component.html',
+  styleUrls: ['./symbol-details.component.css']
 })
-export class ItemDetailsComponent implements OnInit {
+export class SymbolDetailsComponent implements OnInit {
   response?: Response;
 
   /**
    *
    */
-  constructor(private activatedRoute: ActivatedRoute, private itemService: ItemService) {
+  constructor(private activatedRoute: ActivatedRoute, private symbolService: SymbolService) {
     this.response = undefined;
   }
 
@@ -22,7 +22,7 @@ export class ItemDetailsComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       console.log(`View ID '${id}'`);
-      this.itemService.getItem(id!).subscribe(
+      this.symbolService.getSymbol(id!).subscribe(
         (response: any) => {
           console.log(response);
           this.response = response ;

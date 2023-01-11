@@ -1,1 +1,58 @@
-<p>home works!</p>
+<h3>Home</h3>
+<p>{{ room }}</p>
+
+<div class="container-fluid">
+  <div class="row justify-content-center align-items-center g-2">
+    <div class="col">
+      <h4>Buy side Opportunities</h4>
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action">Dashboard</a>
+        <a href="#" class="list-group-item list-group-item-action">Users</a>
+        <a href="#" class="list-group-item list-group-item-action">Settings</a>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Sell side Opportunities</h4>
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action">Dashboard</a>
+        <a href="#" class="list-group-item list-group-item-action">Users</a>
+        <a href="#" class="list-group-item list-group-item-action">Settings</a>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="row justify-content-center align-items-center g-2">
+    <div class="col">
+      <h4>Balance/Resume</h4>
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action">Dashboard</a>
+        <a href="#" class="list-group-item list-group-item-action">Users</a>
+        <a href="#" class="list-group-item list-group-item-action">Settings</a>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="row justify-content-center align-items-center g-2">
+    <div class="col">
+      <h4>Blotter</h4>
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action">Dashboard</a>
+        <a href="#" class="list-group-item list-group-item-action">Users</a>
+        <a href="#" class="list-group-item list-group-item-action">Settings</a>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="row justify-content-center align-items-center g-2">
+    <div class="col">
+      <h4>Log</h4>
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action">Dashboard</a>
+        <a href="#" class="list-group-item list-group-item-action">Users</a>
+        <a href="#" class="list-group-item list-group-item-action">Settings</a>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<p *ngIf="ServerTime">Server Time {{ ServerTime | date: 'fullTime' }}</p>
