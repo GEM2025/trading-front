@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { createPopper } from "@popperjs/core";
 import { AuthService } from './services/auth.service';
 
 @Component({

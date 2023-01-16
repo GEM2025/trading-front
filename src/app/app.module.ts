@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,10 +16,17 @@ import { RoomComponent } from './components/room/room.component';
 import { DrawComponent } from './components/draw/draw.component';
 import { SymbolsComponent } from './components/symbols/symbols.component';
 import { SymbolDetailsComponent } from './components/symbol-details/symbol-details.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './components/login/login.component';
 import { ExchangesComponent } from './components/exchanges/exchanges.component';
 import { ExchangeDetailsComponent } from './components/exchange-details/exchange-details.component';
+import { OpportunityComponent } from './components/opportunity/opportunity.component';
+import { BalanceComponent } from './components/balance/balance.component';
+import { BlotterComponent } from './components/blotter/blotter.component';
+import { LogComponent } from './components/log/log.component';
+import { OpportunityModalComponent } from './components/opportunity/opportunity.modal/opportunity.modal.component';
+import { DebugComponent } from './components/debug/debug.component';
+import { PairsComponent } from './components/pairs/pairs.component';
+import { MarketsComponent } from './components/markets/markets.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +38,15 @@ import { ExchangeDetailsComponent } from './components/exchange-details/exchange
     SymbolDetailsComponent,
     LoginComponent,
     ExchangesComponent,
-    ExchangeDetailsComponent
+    ExchangeDetailsComponent,
+    OpportunityComponent,
+    BalanceComponent,
+    BlotterComponent,
+    LogComponent,
+    OpportunityModalComponent,
+    DebugComponent,
+    PairsComponent,
+    MarketsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -42,7 +59,7 @@ import { ExchangeDetailsComponent } from './components/exchange-details/exchange
   ],
   providers: [
     SocketWebService,
-    CookieService,
+    CookieService
   ],
   bootstrap: [
     AppComponent,

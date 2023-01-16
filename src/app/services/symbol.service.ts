@@ -15,7 +15,7 @@ export class SymbolService {
   constructor(private http: HttpClient) { }
 
   // fech symbols
-  getSymbols(size: number = 25): Observable<any> {
+  getSymbols(size: number = 10): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/${this.apiURL}?limit=${size}`).pipe(
       map(response => this.processResponse(response)));
   }

@@ -1,0 +1,47 @@
+<p>Debug works!</p>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users$ | async">
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.age }}</td>
+      <td>
+        <button (click)="editUser(user)">Edit</button>
+        <button (click)="deleteUser(user)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<form *ngIf="editingUser" (ngSubmit)="saveUser()">
+  <label>
+    ID:
+    <input type="number" [(ngModel)]="editingUser.id" name="id" disabled>
+  </label>
+  <br>
+  <label>
+    Name:
+    <input type="text" [(ngModel)]="editingUser.name" name="name">
+  </label>
+  <br>
+  <label>
+    Age:
+    <input type="number" [(ngModel)]="editingUser.age" name="age">
+  </label>
+  <br>
+  <button type="submit">Save</button>
+  <button (click)="cancelEditing()">Cancel</button>
+</form>
+<button (click)="addUser()">Add User</button>
+<br>
+<button (click)="refreshUsers()">Refresh Users</button>
+
+
+
