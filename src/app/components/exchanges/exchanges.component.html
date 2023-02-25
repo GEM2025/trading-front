@@ -1,6 +1,6 @@
 <div *ngIf="response; else templateNo" class="main-body">
   <div class="table-responsive">
-    <table class="table table-striped table-hover table-borderless table-primary align-middle">
+    <table class="table table-striped table-hover table-borderless table-sm align-middle">
       <thead class="table-light">
         <caption class="text-nowrap">
           Exchanges Catalog Info
@@ -11,23 +11,23 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr class="table-primary">
+        <tr class="table-sm">
           <td scope="row">Seed</td>
           <td>{{ response.info.seed }}</td>
         </tr>
-        <tr class="table-primary">
+        <tr class="table-sm">
           <td scope="row">Skip</td>
           <td>{{ response.info.skip }}</td>
         </tr>
-        <tr class="table-primary">
+        <tr class="table-sm">
           <td scope="row">Limit</td>
           <td>{{ response.info.limit }}</td>
         </tr>
-        <tr class="table-primary">
+        <tr class="table-sm">
           <td scope="row">Results</td>
           <td>{{ response.info.results }}</td>
         </tr>
-        <tr class="table-primary">
+        <tr class="table-sm">
           <td scope="row">Version</td>
           <td>{{ response.info.version }}</td>
         </tr>
@@ -37,7 +37,7 @@
   </div>
   <br />
   <div class="table-responsive">
-    <table *ngIf="response" class="table table-striped table-hover table-borderless table-primary align-middle">
+    <table *ngIf="response" class="table table-striped table-hover table-borderless table-sm align-middle">
       <thead class="table-light">
         <caption class="text-nowrap">
           Exchanges Catalog
@@ -49,15 +49,15 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr *ngFor="let exchange of response?.results; let i = index" class="table-primary">
+        <tr *ngFor="let exchange of response?.results; let i = index" class="table-sm">
           <td scope="row">{{ exchange.id }}</td>
           <td>{{ exchange.name }}</td>
           <td>{{ exchange.description }}</td>
           <td>
-            <a [routerLink]="['/exchange', exchange.id]" class="btn btn-primary" type="button">...</a>
+            <a [routerLink]="['/exchange', exchange.id]" class="btn btn-sm btn-outline-success" type="button">...</a>
           </td>
           <td>
-            <a [routerLink]="['/exchange', exchange.id]" class="btn btn-primary" type="button">x</a>
+            <a [routerLink]="['/exchange', exchange.id]" class="btn btn-sm btn-outline-success" type="button">x</a>
           </td>
         </tr>
       </tbody>

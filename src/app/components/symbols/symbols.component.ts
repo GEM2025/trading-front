@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Component, OnChanges, OnInit, PipeTransform, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { Response } from 'src/app/interfaces/response.interface';
@@ -11,11 +11,15 @@ import { SymbolService } from 'src/app/services/symbol.service';
   styleUrls: ['./symbols.component.css'],
   providers: [DecimalPipe],
 })
-export class SymbolsComponent implements OnInit {
+export class SymbolsComponent implements OnInit, OnChanges {
   response?: Response;
 
   symbols$: Observable<Symbol[]>;
   filter = new FormControl('', { nonNullable: true });
+
+  totalItems = 66;
+  currentPage = 1;
+  itemsPerPage = 25;
 
   constructor(private symbolService: SymbolService, pipe: DecimalPipe) {
     this.response = undefined;
@@ -39,9 +43,22 @@ export class SymbolsComponent implements OnInit {
     return [];
   }
 
+  pageChanged(event: any): void {
+    console.log('Page changed to: ' + event.page);
+    console.log('Number items per page: ' + event.itemsPerPage);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.loadData();
+  }
+
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData():void {
     // must subscribe to be notified by the observable
-    this.symbolService.getSymbols().subscribe(
+    this.symbolService.getSymbols(this.itemsPerPage).subscribe(
       (results: any) => {
         console.log(results);
         this.response = results;

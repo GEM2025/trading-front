@@ -8,7 +8,6 @@ import { LoginComponent } from './components/login/login.component';
 import { VigilanteGuard } from './vigilante.guard';
 import { ExchangesComponent } from './components/exchanges/exchanges.component';
 import { ExchangeDetailsComponent } from './components/exchange-details/exchange-details.component';
-import { PairsComponent } from './components/pairs/pairs.component';
 import { DebugComponent } from './components/debug/debug.component';
 import { MarketsComponent } from './components/markets/markets.component';
 
@@ -40,11 +39,6 @@ const routes: Routes = [
   {
     path: 'symbol/:id',
     component: SymbolDetailsComponent,
-    canActivate: [VigilanteGuard]
-  },
-  {
-    path: 'pairs',
-    component: PairsComponent,
     canActivate: [VigilanteGuard]
   },
   {

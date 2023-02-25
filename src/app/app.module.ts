@@ -25,8 +25,9 @@ import { BlotterComponent } from './components/blotter/blotter.component';
 import { LogComponent } from './components/log/log.component';
 import { OpportunityModalComponent } from './components/opportunity/opportunity.modal/opportunity.modal.component';
 import { DebugComponent } from './components/debug/debug.component';
-import { PairsComponent } from './components/pairs/pairs.component';
 import { MarketsComponent } from './components/markets/markets.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +46,6 @@ import { MarketsComponent } from './components/markets/markets.component';
     LogComponent,
     OpportunityModalComponent,
     DebugComponent,
-    PairsComponent,
     MarketsComponent
   ],
   imports: [
@@ -55,7 +55,8 @@ import { MarketsComponent } from './components/markets/markets.component';
     FormsModule,
     HttpClientModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PaginationModule.forRoot()
   ],
   providers: [
     SocketWebService,
