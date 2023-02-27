@@ -17,9 +17,9 @@ export class ExchangesComponent implements OnInit {
   ngOnInit(): void {
     // must subscribe to be notified by the observable
     this.exchangeService.getExchanges().subscribe(
-      (results: any) => {
-        console.log(results);
-        this.response = results;
+      (response: any) => {
+        console.log(response);
+        this.response = response;
       });
   }
 

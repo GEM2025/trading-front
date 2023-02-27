@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPaginationModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,7 +26,6 @@ import { LogComponent } from './components/log/log.component';
 import { OpportunityModalComponent } from './components/opportunity/opportunity.modal/opportunity.modal.component';
 import { DebugComponent } from './components/debug/debug.component';
 import { MarketsComponent } from './components/markets/markets.component';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 @NgModule({
@@ -54,9 +53,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    NgbModule,
-    ReactiveFormsModule,
-    PaginationModule.forRoot()
+    NgbModule, NgbPaginationModule, NgbDropdownModule,
+    ReactiveFormsModule
   ],
   providers: [
     SocketWebService,

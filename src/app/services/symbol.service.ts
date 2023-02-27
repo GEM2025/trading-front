@@ -15,8 +15,10 @@ export class SymbolService {
   constructor(private http: HttpClient) { }
 
   // fech symbols
-  getSymbols(size: number = 25): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/${this.apiURL}?limit=${size}`).pipe(
+  getSymbols(skip: number, limit: number): Observable<any> {
+    const url = `${environment.apiUrl}/${this.apiURL}?skip=${skip}&limit=${limit}` ;
+    console.log(`SymbolService.getSymbols url=${url}`);
+    return this.http.get<any>(url).pipe(
       map(response => this.processResponse(response)));
   }
 
@@ -37,7 +39,8 @@ export class SymbolService {
         exchange: symbol.exchange,
         pair: symbol.pair,
         bid: symbol.bid,
-        ask: symbol.ask
+        ask: symbol.ask,
+        enabled: symbol.enabled,
       }))
     };
   }

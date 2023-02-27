@@ -29,11 +29,6 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    // redirect to home if already logged in
-    // if (this.authService.isLoggedIn$()) {
-    //   console.log("User Logged In already");
-    //   this.router.navigate(['/home']);
-    // }
   }
 
   ngOnInit(): void {
@@ -58,7 +53,8 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       },
       error: (error) => {
-        console.error(`error ${error}`);
+        console.error(`login error ${error}`);
+        this.error = "Invalid user/password" ;
         this.loading = false;
       },
       complete: () => {
@@ -66,15 +62,6 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       }
     });
-
-      // .subscribe(
-      //   data => {
-      //     this.router.navigate(['/home']);
-      //   },
-      //   error => {
-      //     this.error = error;
-      //     this.loading = false;
-      //   });
 
   }
 

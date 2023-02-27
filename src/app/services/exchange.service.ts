@@ -36,6 +36,7 @@ export class ExchangeService {
         id: exchange._id,
         name: exchange.name,
         description: exchange.description || "No description available",
+        markets: exchange.markets,
         key: exchange.key,
         secret: exchange.secret,
         extra: exchange.extra

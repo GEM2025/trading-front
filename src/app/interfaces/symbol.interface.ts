@@ -4,4 +4,5 @@ export interface Symbol {
   pair: { base: string, term: string };
   bid: { px: number, qty: number };
   ask: { px: number, qty: number };
+  enabled: boolean;
 }

@@ -1,16 +1,7 @@
 <!-- https://ng-bootstrap.github.io/#/components/table/examples#filtering -->
-<div *ngIf="response; else templateNo" class="main-body">
+<div *ngIf="symbolsResponse; else templateNo" class="main-body">
 
-  <form>
-    <div class="mb-3 row">
-      <label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label>
-      <div class="col-xs-3 col-sm-auto">
-        <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" />
-      </div>
-    </div>
-  </form>
-
-  <!-- <div class="table-responsive">
+  <div class="table-responsive">
     <table class="table table-striped table-hover table-borderless table-sm align-middle">
       <thead class="table-light">
         <caption class="text-nowrap">
@@ -24,78 +15,122 @@
       <tbody class="table-group-divider">
         <tr class="table-sm">
           <td scope="row">Seed</td>
-          <td>{{ response.info.seed }}</td>
+          <td>{{ symbolsResponse.info.seed }}</td>
         </tr>
         <tr class="table-sm">
           <td scope="row">Skip</td>
-          <td>{{ response.info.skip }}</td>
+          <td>{{ symbolsResponse.info.skip }}</td>
         </tr>
         <tr class="table-sm">
           <td scope="row">Limit</td>
-          <td>{{ response.info.limit }}</td>
+          <td>{{ symbolsResponse.info.limit }}</td>
         </tr>
         <tr class="table-sm">
           <td scope="row">Total</td>
-          <td>{{ response.info.total }}</td>
+          <td>{{ symbolsResponse.info.total }}</td>
         </tr>
         <tr class="table-sm">
           <td scope="row">Results</td>
-          <td>{{ response.info.results }}</td>
+          <td>{{ symbolsResponse.info.results }}</td>
         </tr>
         <tr class="table-sm">
           <td scope="row">Version</td>
-          <td>{{ response.info.version }}</td>
+          <td>{{ symbolsResponse.info.version }}</td>
         </tr>
       </tbody>
       <tfoot></tfoot>
     </table>
   </div>
-  <br /> -->
+  <br />
+  <div class="d-flex justify-content-between p-2">
+
+    <ngb-pagination *ngIf="totalItems" [collectionSize]="totalItems" [(page)]="currentPage" [pageSize]="itemsPerPage"
+      [boundaryLinks]="true" [ellipses]="true" [maxSize]="20" (pageChange)="pageChanged($event)"></ngb-pagination>
+
+    <div ngbDropdown class="d-inline-block" (openChange)="openChange($event)">
+      <button type="button" class="btn btn-outline-primary" id="dropdownBasicItemsPerPage" ngbDropdownToggle>
+        {{itemsPerPage}} Items per page
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasicItemsPerPage">
+        <button *ngFor="let option of itemsPerPageOptions" ngbDropdownItem (click)="itemsPerPage=option">{{ option }}
+          items per page</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: center;">
+    <caption class="text-nowrap">
+      Symbols Catalog&nbsp;
+    </caption>
+    <input id="table-filtering-search" class="form-control" type="text" placeholder="Full text search" [formControl]="filter" />
+  </div>
+
   <div class="table-responsive">
-    <table *ngIf="response" class="table table-striped table-hover table-borderless table-sm align-middle">
+    <table class="table table-striped table-hover table-borderless table-sm align-middle">
       <thead class="table-light">
-        <caption class="text-nowrap">
-          Symbols Catalog
-        </caption>
         <tr>
-          <th>Name</th>
-          <th>Exchange</th>
+          <th>
+            <div ngbDropdown class="d-inline-block">
+              <div type="button" class="text" id="dropdownBasicFilterExchange" ngbDropdownToggle>
+                {{filterExchange || "Exchange"}}
+              </div>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasicFilterExchange" class="table-sm">
+                <button *ngFor="let exchange of exchanges" ngbDropdownItem (click)="filterExchange=exchange">{{ exchange || "(All)" }}</button>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div ngbDropdown class="d-inline-block">
+              <div type="button" class="text" id="dropdownBasicFilterSymbol" ngbDropdownToggle>
+                {{filterSymbol || "Symbol"}}
+              </div>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasicFilterSymbol" class="table-sm">
+                <button *ngFor="let symbol of symbols" ngbDropdownItem (click)="filterSymbol=symbol">{{ symbol || "(All)" }}</button>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div ngbDropdown class="d-inline-block">
+              <div type="button" class="text" id="dropdownBasicFilterBase" ngbDropdownToggle>
+                {{filterBase || "Base"}}
+              </div>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasicFilterBase" class="table-sm">
+                <button *ngFor="let base of bases" ngbDropdownItem (click)="filterBase=base">{{ base || "(All)" }}</button>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div ngbDropdown class="d-inline-block">
+              <div type="button" class="text" id="dropdownBasicFilterTerm" ngbDropdownToggle>
+                {{filterTerm || "Term"}}
+              </div>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasicFilterTerm" class="table-sm">
+                <button *ngFor="let term of terms" ngbDropdownItem (click)="filterTerm=term">{{ term || "(All)" }}</button>
+              </div>
+            </div>
+          </th>
           <th>Bid</th>
           <th>Ask</th>
-          <th></th>
-          <th></th>
+          <th>Enabled</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr *ngFor="let symbol of response?.results; let i = index" class="table-sm">
-          <td scope="row">{{ symbol.name }}</td>
-          <td>{{ symbol.exchange }}</td>
+        <tr *ngFor="let symbol of symbolsResponse.results; let i = index" class="table-sm">
+          <td scope="row">{{ symbol.exchange }}</td>
+          <td>{{ symbol.name }}</td>
+          <td>{{ symbol.pair.base }}</td>
+          <td>{{ symbol.pair.term }}</td>
           <!-- https://angular.io/api/common/DecimalPipe -->
           <td>{{ symbol.bid.px | number: '1.2-8' }}</td>
           <td>{{ symbol.ask.px | number: '1.2-8' }}</td>
           <td>
-            <a [routerLink]="['/symbol', symbol.id]" class="btn btn-sm btn-outline-success" type="button">...</a>
-          </td>
-          <td>
-            <a [routerLink]="['/symbol', symbol.id]" class="btn btn-sm btn-outline-success" type="button">x</a>
+            <!-- <a [routerLink]="['/symbol', symbol.id]" class="btn btn-sm btn-outline-success" type="button">...</a> -->
+            <input type="checkbox" [(ngModel)]="symbol.checked">
           </td>
         </tr>
       </tbody>
       <tfoot></tfoot>
     </table>
-
-    <div class="d-flex justify-content-between p-2">
-      <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
-
-      <select class="form-select" style="width: auto" [(ngModel)]="itemsPerPage">
-        <option [ngValue]="10">10 items per page</option>
-        <option [ngValue]="25">25 items per page</option>
-        <option [ngValue]="50">50 items per page</option>
-        <option [ngValue]="100">100 items per page</option>
-      </select>
-
-
-    </div>
 
   </div>
 

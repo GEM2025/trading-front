@@ -4,6 +4,8 @@ import { FormControl } from '@angular/forms';
 import { Observable, map, startWith } from 'rxjs';
 import { Response } from 'src/app/interfaces/response.interface';
 import { SymbolService } from 'src/app/services/symbol.service';
+import { ExchangeService } from 'src/app/services/exchange.service';
+
 
 @Component({
   selector: 'app-symbols',
@@ -12,26 +14,77 @@ import { SymbolService } from 'src/app/services/symbol.service';
   providers: [DecimalPipe],
 })
 export class SymbolsComponent implements OnInit, OnChanges {
-  response?: Response;
+  symbolsResponse?: Response;
 
-  symbols$: Observable<Symbol[]>;
+  // symbols$: Observable<Symbol[]>;
   filter = new FormControl('', { nonNullable: true });
 
-  totalItems = 66;
+  filterExchange = null;
+  exchanges: Array<any> = [null];
+
+  filterSymbol = null;
+  symbols: Set<any> = new Set<any>();
+
+  filterBase = null;
+  bases: Set<any> = new Set<any>();
+
+  filterTerm = null;
+  terms: Set<any> = new Set<any>();
+
+  totalItems = undefined;
   currentPage = 1;
   itemsPerPage = 25;
+  itemsPerPageOptions = [10, 25, 50, 100];
 
-  constructor(private symbolService: SymbolService, pipe: DecimalPipe) {
-    this.response = undefined;
-    this.symbols$ = this.filter.valueChanges.pipe(
-      startWith(''),
-      map((text) => this.search(text, pipe)),
-    );
+  constructor(private symbolService: SymbolService, private exchangeService: ExchangeService, pipe: DecimalPipe) {
+    this.symbolsResponse = undefined;
+
+    // this.symbols$ = this.filter.valueChanges.pipe(
+    //   startWith(''),
+    //   map((text) => this.search(text, pipe)),
+    // );
+
+    this.symbols.add(null);
+    this.bases.add(null);
+    this.terms.add(null);
+
+
+
+    this.exchangeService
+      .getExchanges()
+      .subscribe(
+        (response: any) => {
+          console.log(response.info);
+
+          let tempSymbols: Array<any> = new Array<any>();
+          let tempBases: Array<any> = new Array<any>();
+          let tempTerms: Array<any> = new Array<any>();
+
+          for (const exchange of response.results) {
+            this.exchanges.push(exchange.name);
+            for (const market of exchange.markets) {
+              // this.symbols.add(market);
+              tempSymbols.push(market);
+              let pair = market.split("/");
+              tempBases.push(pair[0]);
+              tempTerms.push(pair[1]);
+              // this.bases.add(pair[0]);
+              // this.terms.add(pair[1]);
+            }
+          }
+
+          tempSymbols.sort().forEach(i => this.symbols.add(i));
+          tempBases.sort().forEach(i => this.bases.add(i));
+          tempTerms.sort().forEach(i => this.terms.add(i));
+
+        });
+
+
   }
 
   search = (text: string, pipe: PipeTransform): Symbol[] => {
-    if (this.response) {
-      return this.response.results.filter((symbol) => {
+    if (this.symbolsResponse) {
+      return this.symbolsResponse.results.filter((symbol) => {
         const term = text.toLowerCase();
         return (
           symbol.name.toLowerCase().includes(term) ||
@@ -43,9 +96,14 @@ export class SymbolsComponent implements OnInit, OnChanges {
     return [];
   }
 
+  openChange(event: any): void {
+    console.log('Open changed to: ' + event);
+    this.loadData();
+  }
+
   pageChanged(event: any): void {
-    console.log('Page changed to: ' + event.page);
-    console.log('Number items per page: ' + event.itemsPerPage);
+    this.currentPage = event;
+    this.loadData();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -56,13 +114,17 @@ export class SymbolsComponent implements OnInit, OnChanges {
     this.loadData();
   }
 
-  loadData():void {
+  loadData(): void {
     // must subscribe to be notified by the observable
-    this.symbolService.getSymbols(this.itemsPerPage).subscribe(
-      (results: any) => {
-        console.log(results);
-        this.response = results;
-      });
+
+    this.symbolService
+      .getSymbols((this.currentPage - 1) * this.itemsPerPage, this.itemsPerPage)
+      .subscribe(
+        (response: any) => {
+          console.log(response.info);
+          this.totalItems = response.info.total;
+          this.symbolsResponse = response;
+        });
   }
 
 }

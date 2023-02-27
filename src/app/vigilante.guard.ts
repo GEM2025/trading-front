@@ -11,18 +11,14 @@ export class VigilanteGuard implements CanActivate, CanActivateChild, CanDeactiv
   constructor(private cookieService: CookieService, private router: Router) {
   }
 
-  redirect(flag: boolean): any {
-    if (!flag) {
-      this.router.navigate(['/', 'login']);
-    }
-  }
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     const cookie = this.cookieService.check('user');
-    this.redirect(cookie);
+    if (!cookie) {
+      this.router.navigate(['/', 'login']);
+    }
     return cookie;
   }
 
