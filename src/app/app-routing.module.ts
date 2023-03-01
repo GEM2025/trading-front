@@ -10,6 +10,7 @@ import { ExchangesComponent } from './components/exchanges/exchanges.component';
 import { ExchangeDetailsComponent } from './components/exchange-details/exchange-details.component';
 import { DebugComponent } from './components/debug/debug.component';
 import { MarketsComponent } from './components/markets/markets.component';
+import { CurrenciesComponent } from './components/currencies/currencies.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,11 @@ const routes: Routes = [
   {
     path: 'exchange/:id',
     component: ExchangeDetailsComponent,
+    canActivate: [VigilanteGuard]
+  },
+  {
+    path: 'currencies',
+    component: CurrenciesComponent,
     canActivate: [VigilanteGuard]
   },
   {

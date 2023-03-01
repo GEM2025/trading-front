@@ -47,6 +47,7 @@
           <th>name</th>
           <th>description</th>
           <th>markets</th>
+          <th>enabled</th>
           <th>details</th>
           <th>delete</th>
         </tr>
@@ -57,6 +58,7 @@
           <td>{{ exchange.name }}</td>
           <td>{{ exchange.description }}</td>
           <td>{{ exchange.markets.length }}</td>
+          <td><input type="checkbox" [(ngModel)]="exchange.checked"></td>
           <td>
             <a [routerLink]="['/exchange', exchange.id]" class="btn btn-sm btn-outline-success" type="button">...</a>
           </td>

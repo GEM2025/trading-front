@@ -18,6 +18,10 @@
               class="visually-hidden">(current)</span></a>
         </li>
         <li class="nav-item">
+          <a class="nav-link active" href="/currencies" aria-current="page">Currencies <span
+              class="visually-hidden">(current)</span></a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link active" href="/symbols" aria-current="page">Symbols <span
               class="visually-hidden">(current)</span></a>
         </li>
@@ -37,8 +41,13 @@
         </li> -->
       </ul>
       <form class="d-flex my-2 my-lg-0">
-        <input class="form-control me-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <!-- <input class="form-control me-sm-2" type="text" placeholder="Search"> -->
+        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Initialize Symbols</button>
+        &nbsp;
+        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Initialize Markets</button>
+        &nbsp;
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Refresh CCXT Data</button>
+
       </form>
     </div>
   </div>

@@ -26,6 +26,7 @@ import { LogComponent } from './components/log/log.component';
 import { OpportunityModalComponent } from './components/opportunity/opportunity.modal/opportunity.modal.component';
 import { DebugComponent } from './components/debug/debug.component';
 import { MarketsComponent } from './components/markets/markets.component';
+import { CurrenciesComponent } from './components/currencies/currencies.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { MarketsComponent } from './components/markets/markets.component';
     LogComponent,
     OpportunityModalComponent,
     DebugComponent,
-    MarketsComponent
+    MarketsComponent,
+    CurrenciesComponent
   ],
   imports: [
     AppRoutingModule,

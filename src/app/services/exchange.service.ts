@@ -39,7 +39,8 @@ export class ExchangeService {
         markets: exchange.markets,
         key: exchange.key,
         secret: exchange.secret,
-        extra: exchange.extra
+        extra: exchange.extra,
+        enabled: exchange.enabled,
       }))
     };
   }

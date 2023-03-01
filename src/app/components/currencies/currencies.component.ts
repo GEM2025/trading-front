@@ -1,19 +1,18 @@
 import { Component, OnChanges, OnInit, PipeTransform, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Currency } from 'src/app/interfaces/currency.interface';
 import { Response } from 'src/app/interfaces/response.interface';
-import { MarketService } from 'src/app/services/market.service';
-import { Market } from 'src/app/interfaces/market.interface';
-
+import { CurrencyService } from 'src/app/services/currency.service';
+import { ExchangeService } from 'src/app/services/exchange.service';
 
 @Component({
-  selector: 'app-markets',
-  templateUrl: './markets.component.html',
-  styleUrls: ['./markets.component.css']
+  selector: 'app-currencies',
+  templateUrl: './currencies.component.html',
+  styleUrls: ['./currencies.component.css']
 })
-export class MarketsComponent implements OnInit, OnChanges {
-  marketsResponse?: Response;
+export class CurrenciesComponent implements OnInit, OnChanges {
+  currenciesResponse?: Response;
 
-  // markets$: Observable<Market[]>;
   filter = new FormControl('', { nonNullable: true });
 
   totalItems = undefined;
@@ -21,19 +20,16 @@ export class MarketsComponent implements OnInit, OnChanges {
   itemsPerPage = 25;
   itemsPerPageOptions = [10, 25, 50, 100];
 
-  constructor(private marketService: MarketService){
-    this.marketsResponse = undefined;
-
+  constructor(private currencyService: CurrencyService) {
+    this.currenciesResponse = undefined;
   }
 
-  search = (text: string, pipe: PipeTransform): Market[] => {
-    if (this.marketsResponse) {
-      return this.marketsResponse.results.filter((market) => {
+  search = (text: string, pipe: PipeTransform): Currency[] => {
+    if (this.currenciesResponse) {
+      return this.currenciesResponse.results.filter((currency) => {
         const term = text.toLowerCase();
         return (
-          market.name.toLowerCase().includes(term) ||
-          pipe.transform(market.name).includes(term) ||
-          pipe.transform(market.exchange).includes(term)
+          currency.name.toLowerCase().includes(term)
         );
       });
     }
@@ -61,13 +57,13 @@ export class MarketsComponent implements OnInit, OnChanges {
   loadData(): void {
     // must subscribe to be notified by the observable
 
-    this.marketService
-      .getMarkets((this.currentPage - 1) * this.itemsPerPage, this.itemsPerPage)
+    this.currencyService
+      .getCurrencies((this.currentPage - 1) * this.itemsPerPage, this.itemsPerPage)
       .subscribe(
         (response: any) => {
           console.log(response.info);
           this.totalItems = response.info.total;
-          this.marketsResponse = response;
+          this.currenciesResponse = response;
         });
   }
 

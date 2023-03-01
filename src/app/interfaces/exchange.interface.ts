@@ -5,4 +5,5 @@ export interface Exchange {
   key: string;
   secret: string;
   extra: string;
+  enabled: boolean;
 }

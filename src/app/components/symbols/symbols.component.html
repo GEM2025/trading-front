@@ -69,6 +69,7 @@
     <table class="table table-striped table-hover table-borderless table-sm align-middle">
       <thead class="table-light">
         <tr>
+          <th>Id</th>
           <th>
             <div ngbDropdown class="d-inline-block">
               <div type="button" class="text" id="dropdownBasicFilterExchange" ngbDropdownToggle>
@@ -116,7 +117,8 @@
       </thead>
       <tbody class="table-group-divider">
         <tr *ngFor="let symbol of symbolsResponse.results; let i = index" class="table-sm">
-          <td scope="row">{{ symbol.exchange }}</td>
+          <td scope="row">{{ symbol.id }}</td>
+          <td>{{ symbol.exchange }}</td>
           <td>{{ symbol.name }}</td>
           <td>{{ symbol.pair.base }}</td>
           <td>{{ symbol.pair.term }}</td>

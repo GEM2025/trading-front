@@ -1,7 +1,6 @@
-import { DecimalPipe } from '@angular/common';
 import { Component, OnChanges, OnInit, PipeTransform, SimpleChanges } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { FormControl } from '@angular/forms';
-import { Observable, map, startWith } from 'rxjs';
 import { Response } from 'src/app/interfaces/response.interface';
 import { SymbolService } from 'src/app/services/symbol.service';
 import { ExchangeService } from 'src/app/services/exchange.service';
@@ -48,8 +47,7 @@ export class SymbolsComponent implements OnInit, OnChanges {
     this.bases.add(null);
     this.terms.add(null);
 
-
-
+    // first get the exchanges to allow filtering by exchange
     this.exchangeService
       .getExchanges()
       .subscribe(
