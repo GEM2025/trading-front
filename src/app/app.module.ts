@@ -18,7 +18,6 @@ import { SymbolsComponent } from './components/symbols/symbols.component';
 import { SymbolDetailsComponent } from './components/symbol-details/symbol-details.component';
 import { LoginComponent } from './components/login/login.component';
 import { ExchangesComponent } from './components/exchanges/exchanges.component';
-import { ExchangeDetailsComponent } from './components/exchange-details/exchange-details.component';
 import { OpportunityComponent } from './components/opportunity/opportunity.component';
 import { BalanceComponent } from './components/balance/balance.component';
 import { BlotterComponent } from './components/blotter/blotter.component';
@@ -39,7 +38,6 @@ import { CurrenciesComponent } from './components/currencies/currencies.componen
     SymbolDetailsComponent,
     LoginComponent,
     ExchangesComponent,
-    ExchangeDetailsComponent,
     OpportunityComponent,
     BalanceComponent,
     BlotterComponent,

@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Response } from 'src/app/interfaces/response.interface';
 import { MarketService } from 'src/app/services/market.service';
 import { Market } from 'src/app/interfaces/market.interface';
+import { SocketWebService } from 'src/app/services/socket-web.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class MarketsComponent implements OnInit, OnChanges {
   itemsPerPage = 25;
   itemsPerPageOptions = [10, 25, 50, 100];
 
-  constructor(private marketService: MarketService){
+  constructor(private marketService: MarketService, private socketWebService: SocketWebService){
     this.marketsResponse = undefined;
 
   }
@@ -69,6 +70,11 @@ export class MarketsComponent implements OnInit, OnChanges {
           this.totalItems = response.info.total;
           this.marketsResponse = response;
         });
+  }
+
+  onEnable(ex: Market): void {
+    console.log(ex);
+    this.socketWebService.Socket().emit("Market_Enabled", ex);
   }
 
 }

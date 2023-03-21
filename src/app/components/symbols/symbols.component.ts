@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { Response } from 'src/app/interfaces/response.interface';
 import { SymbolService } from 'src/app/services/symbol.service';
 import { ExchangeService } from 'src/app/services/exchange.service';
+import { SocketWebService } from 'src/app/services/socket-web.service';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class SymbolsComponent implements OnInit, OnChanges {
   itemsPerPage = 25;
   itemsPerPageOptions = [10, 25, 50, 100];
 
-  constructor(private symbolService: SymbolService, private exchangeService: ExchangeService, pipe: DecimalPipe) {
+  constructor(private symbolService: SymbolService, private exchangeService: ExchangeService, private socketWebService: SocketWebService, pipe: DecimalPipe) {
     this.symbolsResponse = undefined;
 
     // this.symbols$ = this.filter.valueChanges.pipe(
@@ -123,6 +124,11 @@ export class SymbolsComponent implements OnInit, OnChanges {
           this.totalItems = response.info.total;
           this.symbolsResponse = response;
         });
+  }
+
+  onEnable(ex: Symbol): void {
+    console.log(ex);
+    this.socketWebService.Socket().emit("Symbol_Enabled", ex);
   }
 
 }

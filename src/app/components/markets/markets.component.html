@@ -85,7 +85,7 @@
           <td>{{ market.items[2] }}</td>
           <td>
             <!-- <a [routerLink]="['/market', market.id]" class="btn btn-sm btn-outline-success" type="button">...</a> -->
-            <input type="checkbox" [(ngModel)]="market.enabled">
+            <input type="checkbox" [(ngModel)]="market.enabled" (change)="onEnable(market)">
           </td>
         </tr>
       </tbody>

@@ -33,7 +33,6 @@ export class SocketWebService extends Socket {
 
   listen(): void {
     this.ioSocket.on('Heartbeat', (msg: any) => {
-      console.log(`Heartbeat`);
       this.heartbeatCallback.emit(msg);
     });
 
@@ -44,7 +43,25 @@ export class SocketWebService extends Socket {
     this.ioSocket.on('Disconnect', (msg: any) => {
       console.log(`Disconnect ${msg}`);
     });
+
+    this.ioSocket.on('SymbolService_InitializeSymbolsFromDB-response', (msg: any) => {
+      console.log(`SymbolService_InitializeSymbolsFromDB-response ${msg}`);
+    });
+
+    this.ioSocket.on('MarketService_InitializeMarketsFromDB-response', (msg: any) => {
+      console.log(`MarketService_InitializeMarketsFromDB-response ${msg}`);
+    });
+
+    this.ioSocket.on('OpportunitiesServices_InitializeCalculations-response', (msg: any) => {
+      console.log(`OpportunitiesServices_InitializeCalculations-response ${msg}`);
+    });
+
+
+
   }
 
+  public Socket() {
+    return this.ioSocket ;
+  }
 
 }

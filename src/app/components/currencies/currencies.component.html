@@ -80,7 +80,7 @@
           <td>{{ currency.name }}</td>
           <td>
             <!-- <a [routerLink]="['/currency', currency.id]" class="btn btn-sm btn-outline-success" type="button">...</a> -->
-            <input type="checkbox" [(ngModel)]="currency.enabled">
+            <input type="checkbox" [(ngModel)]="currency.enabled" (change)="onEnable(currency)" >
           </td>
         </tr>
       </tbody>

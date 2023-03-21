@@ -4,6 +4,7 @@ import { Currency } from 'src/app/interfaces/currency.interface';
 import { Response } from 'src/app/interfaces/response.interface';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { ExchangeService } from 'src/app/services/exchange.service';
+import { SocketWebService } from 'src/app/services/socket-web.service';
 
 @Component({
   selector: 'app-currencies',
@@ -20,7 +21,7 @@ export class CurrenciesComponent implements OnInit, OnChanges {
   itemsPerPage = 25;
   itemsPerPageOptions = [10, 25, 50, 100];
 
-  constructor(private currencyService: CurrencyService) {
+  constructor(private currencyService: CurrencyService, private socketWebService: SocketWebService) {
     this.currenciesResponse = undefined;
   }
 
@@ -66,5 +67,11 @@ export class CurrenciesComponent implements OnInit, OnChanges {
           this.currenciesResponse = response;
         });
   }
+
+  onEnable(ex: Currency): void {
+    console.log(ex);
+    this.socketWebService.Socket().emit("Currency_Enabled", ex);
+  }
+
 
 }

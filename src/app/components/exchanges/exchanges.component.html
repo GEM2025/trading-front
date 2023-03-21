@@ -1,4 +1,4 @@
-<div *ngIf="response; else templateNo" class="main-body">
+<div *ngIf="exchanges && info; else templateNo" class="main-body">
   <div class="table-responsive">
     <table class="table table-striped table-hover table-borderless table-sm align-middle">
       <thead class="table-light">
@@ -13,31 +13,187 @@
       <tbody class="table-group-divider">
         <tr class="table-sm">
           <td scope="row">Seed</td>
-          <td>{{ response.info.seed }}</td>
+          <td>{{ info.seed }}</td>
         </tr>
         <tr class="table-sm">
           <td scope="row">Skip</td>
-          <td>{{ response.info.skip }}</td>
+          <td>{{ info.skip }}</td>
         </tr>
         <tr class="table-sm">
           <td scope="row">Limit</td>
-          <td>{{ response.info.limit }}</td>
+          <td>{{ info.limit }}</td>
         </tr>
         <tr class="table-sm">
           <td scope="row">Results</td>
-          <td>{{ response.info.results }}</td>
+          <td>{{ info.results }}</td>
         </tr>
         <tr class="table-sm">
           <td scope="row">Version</td>
-          <td>{{ response.info.version }}</td>
+          <td>{{ info.version }}</td>
         </tr>
       </tbody>
       <tfoot></tfoot>
     </table>
   </div>
   <br />
+
+  <!--------------------------------------------------------------------------------------------------->
+  <!-- Add New -->
+
+  <ng-template #exchange_addnew let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add new exchange</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div *ngIf="exchange; else templateDialogAddNewNo">
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <div class="table-responsive">
+              <div class="main-body">
+                <table class="table table-striped table-hover table-borderless table-sm align-middle">
+                  <thead>
+                    <tr>
+                      <th>Key</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-group-divider ">
+                    <tr class="table-sm">
+                      <td scope="row">Name</td>
+                      <td><input [(ngModel)]="exchange.name" [value]="exchange.name" name="name" /></td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Description</td>
+                      <td><input [(ngModel)]="exchange.description" [value]="exchange.description" name="description" />
+                      </td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Key</td>
+                      <td><input [(ngModel)]="exchange.key" [value]="exchange.key" name="key" /></td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Secret</td>
+                      <td><input [(ngModel)]="exchange.secret" [value]="exchange.secret" name="secret" /></td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Extra</td>
+                      <td><input [(ngModel)]="exchange.extra" [value]="exchange.extra" name="extra" /></td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Enabled</td>
+                      <td><input type="checkbox" [(ngModel)]="exchange.enabled" [value]="exchange.enabled"
+                          name="enabled">
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot></tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Post')">Save</button>
+      </div>
+    </div>
+    <ng-template #templateDialogAddNewNo>
+      <div class="modal-body">
+        <p>Loading...</p>
+      </div>
+    </ng-template>
+  </ng-template>
+
+  <!--------------------------------------------------------------------------------------------------->
+  <!-- Details -->
+
+  <ng-template #exchange_details let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Exchange details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div *ngIf="exchange; else templateDialogDetailsNo">
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <div class="table-responsive">
+              <div class="main-body">
+                <table class="table table-striped table-hover table-borderless table-sm align-middle">
+                  <thead>
+                    <tr>
+                      <th>Key</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-group-divider ">
+                    <tr class="table-sm">
+                      <td scope="row">Id</td>
+                      <td>{{ exchange.id }}</td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Name</td>
+                      <td><input [(ngModel)]="exchange.name" [value]="exchange.name" name="name" /></td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Description</td>
+                      <td><input [(ngModel)]="exchange.description" [value]="exchange.description" name="description" />
+                      </td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Key</td>
+                      <td><input [(ngModel)]="exchange.key" [value]="exchange.key" name="key" /></td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Secret</td>
+                      <td><input [(ngModel)]="exchange.secret" [value]="exchange.secret" name="secret" /></td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Extra</td>
+                      <td><input [(ngModel)]="exchange.extra" [value]="exchange.extra" name="extra" /></td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Markets</td>
+                      <td>{{ exchange.markets.length }}</td>
+                    </tr>
+                    <tr class="table-sm">
+                      <td scope="row">Enabled</td>
+                      <td><input type="checkbox" [(ngModel)]="exchange.enabled" [value]="exchange.enabled"
+                          name="enabled">
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot></tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" (click)="modal.close('Delete')">
+          Delete Exchange</button>
+        <button type="button" class="btn btn-outline-success" (click)="modal.close('Update')">
+          Save Exchange</button>
+      </div>
+    </div>
+    <ng-template #templateDialogDetailsNo>
+      <div class="modal-body">
+        <p>Loading...</p>
+      </div>
+    </ng-template>
+  </ng-template>
+
+  <button class="btn btn-sm btn-outline-success" (click)="openAddNewDialog(exchange_addnew)">
+    Add new exchange...</button>
+
+  <!--------------------------------------------------------------------------------------------------->
+  <!-- Table -->
+
+  <hr />
+
   <div class="table-responsive">
-    <table *ngIf="response" class="table table-striped table-hover table-borderless table-sm align-middle">
+    <table *ngIf="exchanges" class="table table-striped table-hover table-borderless table-sm align-middle">
       <thead class="table-light">
         <caption class="text-nowrap">
           Exchanges Catalog
@@ -48,22 +204,20 @@
           <th>description</th>
           <th>markets</th>
           <th>enabled</th>
-          <th>details</th>
-          <th>delete</th>
+          <th></th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr *ngFor="let exchange of response?.results; let i = index" class="table-sm">
+        <tr *ngFor="let exchange of exchanges" class="table-sm">
           <td scope="row">{{ exchange.id }}</td>
           <td>{{ exchange.name }}</td>
           <td>{{ exchange.description }}</td>
           <td>{{ exchange.markets.length }}</td>
-          <td><input type="checkbox" [(ngModel)]="exchange.checked"></td>
+          <td><input type="checkbox" [(ngModel)]="exchange.enabled" (change)="onUpdateExchange(exchange)"></td>
           <td>
-            <a [routerLink]="['/exchange', exchange.id]" class="btn btn-sm btn-outline-success" type="button">...</a>
-          </td>
-          <td>
-            <a [routerLink]="['/exchange', exchange.id]" class="btn btn-sm btn-outline-success" type="button">x</a>
+            <!-- <a [routerLink]="['/exchange', exchange.id]" class="btn btn-sm btn-outline-success" type="button">...</a> -->
+            <button class="btn btn-sm btn-outline-success"
+              (click)="openDetailsDialog(exchange_details, exchange.id)">Details...</button>
           </td>
         </tr>
       </tbody>

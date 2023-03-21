@@ -127,7 +127,7 @@
           <td>{{ symbol.ask.px | number: '1.2-8' }}</td>
           <td>
             <!-- <a [routerLink]="['/symbol', symbol.id]" class="btn btn-sm btn-outline-success" type="button">...</a> -->
-            <input type="checkbox" [(ngModel)]="symbol.checked">
+            <input type="checkbox" [(ngModel)]="symbol.checked" (change)="onEnable(symbol)">
           </td>
         </tr>
       </tbody>

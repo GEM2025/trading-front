@@ -3,6 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { SocketWebService } from 'src/app/services/socket-web.service';
 
+interface Todo {
+  id: number;
+  title: string;
+  completed: boolean;
+}
 
 @Component({
   selector: 'app-home',
