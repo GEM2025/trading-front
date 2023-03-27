@@ -26,6 +26,9 @@ import { OpportunityModalComponent } from './components/opportunity/opportunity.
 import { DebugComponent } from './components/debug/debug.component';
 import { MarketsComponent } from './components/markets/markets.component';
 import { CurrenciesComponent } from './components/currencies/currencies.component';
+import { RegisterComponent } from './components/register/register.component';
+import { PasswordComponent } from './components/password/password.component';
+import { UsersComponent } from './components/users/users.component';
 
 
 @NgModule({
@@ -45,7 +48,10 @@ import { CurrenciesComponent } from './components/currencies/currencies.componen
     OpportunityModalComponent,
     DebugComponent,
     MarketsComponent,
-    CurrenciesComponent
+    CurrenciesComponent,
+    RegisterComponent,
+    PasswordComponent,
+    UsersComponent
   ],
   imports: [
     AppRoutingModule,

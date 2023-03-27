@@ -4,7 +4,6 @@ import { ExchangeService } from 'src/app/services/exchange.service';
 import { SocketWebService } from 'src/app/services/socket-web.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Info } from 'src/app/interfaces/info.interface';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-exchanges',

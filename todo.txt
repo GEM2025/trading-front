@@ -25,3 +25,12 @@ git push -u origin main
 …or import code from another repository
 You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
 
+
+---------------------------------------------------------------------------
+
+The ng generate component command will create a new directory with the name of the component inside the app directory by default,
+But you can specify a different directory
+
+# ng generate component components/xyz
+
+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

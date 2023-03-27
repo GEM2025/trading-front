@@ -29,6 +29,12 @@
           <a class="nav-link active" href="/exchanges" aria-current="page">Exchanges <span
               class="visually-hidden">(current)</span></a>
         </li>
+        <div *ngIf="authService.isAdmin$ | async">
+        <li class="nav-item">
+          <a class="nav-link active" href="/users" aria-current="page">Users <span
+              class="visually-hidden">(current)</span></a>
+        </li>
+      </div>
         <li class="nav-item">
           <a class="nav-link" href="/debug" aria-current="page">Debug <span class="visually-hidden">(current)</span></a>
         </li>

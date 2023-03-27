@@ -3,21 +3,22 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Response } from '../interfaces/response.interface';
 import { environment } from 'src/environments/environment';
-import { Currency } from '../interfaces/currency.interface';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CurrencyService {
+export class UserService {
 
-  private readonly apiURL: string = 'currency';
+  private readonly apiURL: string = 'User';
 
   // https://www.youtube.com/watch?v=s1qgSzEtCRI
   private headers: HttpHeaders;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService) {
 
     const currentUser: User = JSON.parse(this.cookieService.get('user'));
 
@@ -27,18 +28,10 @@ export class CurrencyService {
     });
   }
 
-  // fech currencies
-  getCurrencies(skip: number, limit: number): Observable<any> {
+  // fech Users
+  getUsers(skip: number, limit: number): Observable<any> {
     const url = `${environment.apiUrl}/${this.apiURL}?skip=${skip}&limit=${limit}`;
-    console.log(`CurrencyService.getCurrencies url=${url}`);
-    return this.http.get<any>(url, { headers: this.headers }).pipe(
-      map(response => this.processResponse(response)));
-  }
-
-  // fetch specific currency
-  getCurrency(id: string = ""): Observable<any> {
-    const url = `${environment.apiUrl}/${this.apiURL}/${id}`;
-    console.log(`Get currency '${url}'`);
+    console.log(`UserService.getUsers url=${url}`);
     return this.http.get<any>(url, { headers: this.headers }).pipe(
       map(response => this.processResponse(response)));
   }
@@ -46,11 +39,14 @@ export class CurrencyService {
   private processResponse(response: Response): Response {
     return {
       info: { ...response.info },
-      results: response.results.map((currency: any) => (<Currency>{
-        id: currency._id,
-        name: currency.name,
-        enabled: currency.enabled,
+      results: response.results.map((user: any) => (<User>{
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        enabled: user.enabled
       }))
     };
   }
+
 }

@@ -10,11 +10,22 @@ import { ExchangesComponent } from './components/exchanges/exchanges.component';
 import { DebugComponent } from './components/debug/debug.component';
 import { MarketsComponent } from './components/markets/markets.component';
 import { CurrenciesComponent } from './components/currencies/currencies.component';
+import { RegisterComponent } from './components/register/register.component';
+import { PasswordComponent } from './components/password/password.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'password/:mode',
+    component: PasswordComponent
   },
   {
     path: 'room/:room',
@@ -49,6 +60,11 @@ const routes: Routes = [
   {
     path: 'debug',
     component: DebugComponent,
+    canActivate: [VigilanteGuard]
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
     canActivate: [VigilanteGuard]
   },
   {

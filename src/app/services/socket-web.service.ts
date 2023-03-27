@@ -17,7 +17,7 @@ export class SocketWebService extends Socket {
         options: {
           withCredentials: true,
           extraHeaders: {
-            authorization: "abcd"
+            authorization: cookieService.get('user') && JSON.parse(cookieService.get('user')).token
           },
           query:
           {
