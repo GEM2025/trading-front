@@ -32,18 +32,21 @@ export class AppComponent implements OnInit {
   SymbolService_InitializeSymbolsFromDB = () : void =>
   {
     console.log("SymbolService_InitializeSymbolsFromDB()");
+    alert("Not implemented");
     // this.socketWebService.Socket().emit("SymbolService_InitializeSymbolsFromDB", null);
   }
 
   MarketService_InitializeMarketsFromDB = () : void =>
   {
     console.log("MarketService.InitializeMarketsFromDB()");
+    alert("Not implemented");
     // this.socketWebService.Socket().emit("MarketService_InitializeMarketsFromDB", null);
   }
 
   OpportunitiesServices_InitializeCalculations = () : void =>
   {
     console.log("OpportunitiesServices.InitializeCalculations()");
+    alert("Not implemented");
     // this.socketWebService.Socket().emit("OpportunitiesServices_InitializeCalculations", null);
   }
 

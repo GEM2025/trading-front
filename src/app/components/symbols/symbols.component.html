@@ -116,18 +116,18 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr *ngFor="let symbol of symbolsResponse.results; let i = index" class="table-sm">
-          <td scope="row">{{ symbol.id }}</td>
-          <td>{{ symbol.exchange }}</td>
-          <td>{{ symbol.name }}</td>
-          <td>{{ symbol.pair.base }}</td>
-          <td>{{ symbol.pair.term }}</td>
+        <tr *ngFor="let i of symbolsResponse.results" class="table-sm">
+          <td scope="row">{{ i.id }}</td>
+          <td>{{ i.exchange }}</td>
+          <td>{{ i.name }}</td>
+          <td>{{ i.pair.base }}</td>
+          <td>{{ i.pair.term }}</td>
           <!-- https://angular.io/api/common/DecimalPipe -->
-          <td>{{ symbol.bid.px | number: '1.2-8' }}</td>
-          <td>{{ symbol.ask.px | number: '1.2-8' }}</td>
+          <td>{{ i.bid.px | number: '1.2-8' }}</td>
+          <td>{{ i.ask.px | number: '1.2-8' }}</td>
           <td>
             <!-- <a [routerLink]="['/symbol', symbol.id]" class="btn btn-sm btn-outline-success" type="button">...</a> -->
-            <input type="checkbox" [(ngModel)]="symbol.checked" (change)="onEnable(symbol)">
+            <input type="checkbox" [(ngModel)]="i.checked" (change)="onEnable(i)">
           </td>
         </tr>
       </tbody>

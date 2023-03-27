@@ -29,6 +29,7 @@ import { CurrenciesComponent } from './components/currencies/currencies.componen
 import { RegisterComponent } from './components/register/register.component';
 import { PasswordComponent } from './components/password/password.component';
 import { UsersComponent } from './components/users/users.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -51,7 +52,7 @@ import { UsersComponent } from './components/users/users.component';
     CurrenciesComponent,
     RegisterComponent,
     PasswordComponent,
-    UsersComponent
+    UsersComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -60,7 +61,8 @@ import { UsersComponent } from './components/users/users.component';
     FormsModule,
     HttpClientModule,
     NgbModule, NgbPaginationModule, NgbDropdownModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxDatatableModule,
   ],
   providers: [
     SocketWebService,

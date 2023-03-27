@@ -11,7 +11,7 @@ import { User } from '../models/user';
 })
 export class UserService {
 
-  private readonly apiURL: string = 'User';
+  private readonly apiURL: string = 'auth';
 
   // https://www.youtube.com/watch?v=s1qgSzEtCRI
   private headers: HttpHeaders;
