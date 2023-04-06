@@ -33,4 +33,4 @@ But you can specify a different directory
 
 # ng generate component components/xyz
 
-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
+
