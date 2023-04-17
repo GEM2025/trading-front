@@ -24,3 +24,65 @@
   </tbody>
 </table>
 
+<p>{{ side }} side opportunities</p>
+<ngx-datatable
+  [rows]="filteredOpportunities$ | async"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="'auto'"
+  [limit]="10"
+  [sortType]="sortType"
+  [sorts]="[{prop: 'name'}]">
+
+  <ngx-datatable-column name="A">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.a.exchange }} {{ row.a.side }} {{ row.a.name }}
+    </ng-template>
+    <ng-template ngx-datatable-header-template>
+      <div class="d-flex flex-column align-items-start">
+        <input class="form-control" type="text" placeholder="A" (input)="onFilterA(getInputValue($event))" />
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="B">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.b.exchange }} {{ row.b.side }} {{ row.b.name }}
+    </ng-template>
+    <ng-template ngx-datatable-header-template>
+      <div class="d-flex flex-column align-items-start">
+        <input class="form-control" type="text" placeholder="B" (input)="onFilterB(getInputValue($event))" />
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="C">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.c?.exchange }} {{ row.c?.side }} {{ row.c?.name }}
+    </ng-template>
+    <ng-template ngx-datatable-header-template>
+      <div class="d-flex flex-column align-items-start">
+        <input class="form-control" type="text" placeholder="C" (input)="onFilterC(getInputValue($event))" />
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Volume">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.volume | number: '1.2-2' }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Trade">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.trade | number: '1.2-2' }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Action">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <button class="btn btn-outline-success btn-sm" (click)="trade(row.id)">...</button>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>

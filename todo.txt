@@ -1,3 +1,11 @@
+/home/hcasavantes/snap/code/common/.cache/gio-modules/libgiognomeproxy.so: undefined symbol: g_task_set_name
+Failed to load module: /home/hcasavantes/snap/code/common/.cache/gio-modules/libgiognomeproxy.so
+/home/hcasavantes/snap/code/common/.cache/gio-modules/libgiognutls.so: undefined symbol: g_task_set_name
+Failed to load module: /home/hcasavantes/snap/code/common/.cache/gio-modules/libgiognutls.so
+/home/hcasavantes/snap/code/common/.cache/gio-modules/libgiolibproxy.so: undefined symbol: g_task_set_name
+Failed to load module: /home/hcasavantes/snap/code/common/.cache/gio-modules/libgiolibproxy.so
+
+
 ng serve -o
 
 Angular Course | Consuming API's with Angular

@@ -13,3 +13,6 @@ export interface Opportunity {
   trade: number;
 }
 
+
+
+
