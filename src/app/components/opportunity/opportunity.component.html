@@ -1,4 +1,4 @@
-<p>{{side}} side opportunities</p>
+<!-- <p>{{side}} side opportunities</p>
 <table class="table table-sm">
   <thead>
     <tr>
@@ -22,10 +22,13 @@
       </td>
     </tr>
   </tbody>
-</table>
+</table> -->
+
+<!-- http://swimlane.github.io/ngx-datatable/# -->
 
 <p>{{ side }} side opportunities</p>
 <ngx-datatable
+  class="bootstrap"
   [rows]="filteredOpportunities$ | async"
   [columnMode]="'force'"
   [headerHeight]="50"

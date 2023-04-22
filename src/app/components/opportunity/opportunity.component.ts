@@ -29,10 +29,6 @@ export class OpportunityComponent implements OnInit {
 
   filteredOpportunities$: Observable<Opportunity[]>;
 
-  // private stringify = function(s: Step | undefined):string {
-  //   return s ? `${s.exchange} ${s.side} ${s.name}` : '' ;
-  // };
-
   constructor(
     private router: ActivatedRoute,
     private cookieService: CookieService,
@@ -48,22 +44,43 @@ export class OpportunityComponent implements OnInit {
 
     this._opportunities = [
       { id: 1, a: { side: "buy", name: "ABC/XYZ", exchange: "KuCoin" }, b: { side: "buy", name: "XYZ/123", exchange: "Kraken" }, c: { side: "buy", name: "123/ABC", exchange: "Kraken" }, volume: 0.05, trade: 300 },
-      { id: 2, a: { side: "buy", name: "ABC/XYZ", exchange: "Kraken" }, b: { side: "buy", name: "XYZ/ABC", exchange: "Gemini" }, volume: 0.05, trade: 250 },
-      { id: 3, a: { side: "buy", name: "ABC/XYZ", exchange: "Coinbase" }, b: { side: "sell", name: "ABC/XYZ", exchange: "HitBTC" }, volume: 0.05, trade: 200 },
+      { id: 2, a: { side: "buy", name: "ABC/XYZ", exchange: "KuCoin" }, b: { side: "buy", name: "XYZ/345", exchange: "Kraken" }, c: { side: "buy", name: "345/ABC", exchange: "Kraken" }, volume: 0.05, trade: 300 },
+      { id: 4, a: { side: "sell", name: "ABC/XYZ", exchange: "KuCoin" }, b: { side: "sell", name: "XYZ/345", exchange: "Kraken" }, c: { side: "sell", name: "345/ABC", exchange: "Kraken" }, volume: 0.05, trade: 300 },
+      { id: 5, a: { side: "buy", name: "ABC/XYZ", exchange: "Kraken" }, b: { side: "buy", name: "XYZ/ABC", exchange: "Gemini" }, volume: 0.05, trade: 250 },
+      { id: 6, a: { side: "buy", name: "ABC/XYZ", exchange: "Coinbase" }, b: { side: "sell", name: "ABC/XYZ", exchange: "HitBTC" }, volume: 0.05, trade: 200 },
     ];
 
     const stringify = (s: Step | undefined): string => {
       return s ? `${s.exchange} ${s.side} ${s.name}` : '';
     };
 
+    function matchesTokenFilter(str: string, query: string): boolean {
+      const tokens = query.toLowerCase().split(' ').filter(token => token.trim() !== '');
+      const lowerCaseStr = str.toLowerCase();
+      const words = lowerCaseStr.split(' ');
+
+      return tokens.every(token => {
+        return words.some(word => word.startsWith(token));
+      });
+    }
+
+    // this.filteredOpportunities$ = combineLatest([this.opportunities$, this.filterA$, this.filterB$, this.filterC$]).pipe(
+    //   map(([opportunities, filterA, filterB, filterC]) =>
+    //     opportunities.filter(o =>
+    //       stringify( o.a ).toLowerCase().includes(filterA.toLowerCase()) &&
+    //       stringify( o.b ).toLowerCase().includes(filterB.toLowerCase()) &&
+    //       stringify( o.c ).toLowerCase().includes(filterC.toLowerCase())
+    //   )
+    //   )
+    // );
 
     this.filteredOpportunities$ = combineLatest([this.opportunities$, this.filterA$, this.filterB$, this.filterC$]).pipe(
       map(([opportunities, filterA, filterB, filterC]) =>
         opportunities.filter(o =>
-          stringify( o.a ).toLowerCase().includes(filterA.toLowerCase()) &&
-          stringify( o.b ).toLowerCase().includes(filterB.toLowerCase()) &&
-          stringify( o.c ).toLowerCase().includes(filterC.toLowerCase())
-      )
+          matchesTokenFilter(stringify( o.a ), filterA ) &&
+          matchesTokenFilter(stringify( o.b ), filterB ) &&
+          matchesTokenFilter(stringify( o.c ), filterC )
+        )
       )
     );
   }
