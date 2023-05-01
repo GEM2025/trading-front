@@ -1,91 +1,65 @@
-<!-- <p>{{side}} side opportunities</p>
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th>A</th>
-      <th>B</th>
-      <th>C</th>
-      <th>Trade</th>
-      <th>Volume</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let opportunity of opportunities$ | async">
-      <td>{{ opportunity.a.side }} {{ opportunity.a.name }}</td>
-      <td>{{ opportunity.b.side }} {{ opportunity.b.name }}</td>
-      <td>{{ opportunity.c?.side }} {{ opportunity.c?.name }}</td>
-      <td>{{ opportunity.volume | number: '1.2-2' }}</td>
-      <td>{{ opportunity.trade | number: '1.2-2' }}</td>
-      <td>
-        <button class="btn btn-outline-success btn-sm" (click)="trade(opportunity.id)">...</button>
-      </td>
-    </tr>
-  </tbody>
-</table> -->
 
-<!-- http://swimlane.github.io/ngx-datatable/# -->
+<div *ngIf="filteredOpportunities$; else templateNo" class="main-body">
 
-<p>{{ side }} side opportunities</p>
-<ngx-datatable
-  class="bootstrap"
-  [rows]="filteredOpportunities$ | async"
-  [columnMode]="'force'"
-  [headerHeight]="50"
-  [footerHeight]="50"
-  [rowHeight]="'auto'"
-  [limit]="10"
-  [sortType]="sortType"
-  [sorts]="[{prop: 'name'}]">
+  <p>{{ side }} side opportunities</p>
+  <ngx-datatable class="bootstrap" [rows]="filteredOpportunities$ | async" [columnMode]="'force'" [headerHeight]="50"
+    [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [sortType]="sortType" [sorts]="[{prop: 'name'}]">
 
-  <ngx-datatable-column name="A">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{ row.a.exchange }} {{ row.a.side }} {{ row.a.name }}
-    </ng-template>
-    <ng-template ngx-datatable-header-template>
-      <div class="d-flex flex-column align-items-start">
-        <input class="form-control" type="text" placeholder="A" (input)="onFilterA(getInputValue($event))" />
-      </div>
-    </ng-template>
-  </ngx-datatable-column>
+    <ngx-datatable-column name="A">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.a.exchange }} {{ row.a.side }} {{ row.a.name }}
+      </ng-template>
+      <ng-template ngx-datatable-header-template>
+        <div class="d-flex flex-column align-items-start">
+          <input class="form-control" type="text" placeholder="A" (input)="onFilterA(getInputValue($event))" />
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
 
-  <ngx-datatable-column name="B">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{ row.b.exchange }} {{ row.b.side }} {{ row.b.name }}
-    </ng-template>
-    <ng-template ngx-datatable-header-template>
-      <div class="d-flex flex-column align-items-start">
-        <input class="form-control" type="text" placeholder="B" (input)="onFilterB(getInputValue($event))" />
-      </div>
-    </ng-template>
-  </ngx-datatable-column>
+    <ngx-datatable-column name="B">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.b.exchange }} {{ row.b.side }} {{ row.b.name }}
+      </ng-template>
+      <ng-template ngx-datatable-header-template>
+        <div class="d-flex flex-column align-items-start">
+          <input class="form-control" type="text" placeholder="B" (input)="onFilterB(getInputValue($event))" />
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
 
-  <ngx-datatable-column name="C">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{ row.c?.exchange }} {{ row.c?.side }} {{ row.c?.name }}
-    </ng-template>
-    <ng-template ngx-datatable-header-template>
-      <div class="d-flex flex-column align-items-start">
-        <input class="form-control" type="text" placeholder="C" (input)="onFilterC(getInputValue($event))" />
-      </div>
-    </ng-template>
-  </ngx-datatable-column>
+    <ngx-datatable-column name="C">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.c?.exchange }} {{ row.c?.side }} {{ row.c?.name }}
+      </ng-template>
+      <ng-template ngx-datatable-header-template>
+        <div class="d-flex flex-column align-items-start">
+          <input class="form-control" type="text" placeholder="C" (input)="onFilterC(getInputValue($event))" />
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
 
-  <ngx-datatable-column name="Volume">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{ row.volume | number: '1.2-2' }}
-    </ng-template>
-  </ngx-datatable-column>
+    <ngx-datatable-column name="Volume">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.volume | number: '1.2-2' }}
+      </ng-template>
+    </ngx-datatable-column>
 
-  <ngx-datatable-column name="Trade">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{ row.trade | number: '1.2-2' }}
-    </ng-template>
-  </ngx-datatable-column>
+    <ngx-datatable-column name="Trade">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.trade | number: '1.2-2' }}
+      </ng-template>
+    </ngx-datatable-column>
 
-  <ngx-datatable-column name="Action">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      <button class="btn btn-outline-success btn-sm" (click)="trade(row.id)">...</button>
-    </ng-template>
-  </ngx-datatable-column>
-</ngx-datatable>
+    <ngx-datatable-column name="Action">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <button class="btn btn-outline-success btn-sm" (click)="trade(row.id)">...</button>
+      </ng-template>
+    </ngx-datatable-column>
+
+  </ngx-datatable>
+
+</div>
+
+<ng-template #templateNo>
+  <p>Loading...</p>
+</ng-template>

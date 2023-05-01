@@ -1,13 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { Opportunity, Step } from 'src/app/models/opportunity';
 import { SocketWebService } from 'src/app/services/socket-web.service';
 import { OpportunityModalComponent } from './opportunity.modal/opportunity.modal.component';
 import { OpportunityModalDataService } from './opportunity.modal.service';
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-opportunity',
@@ -17,21 +15,23 @@ import { map } from 'rxjs/operators';
 export class OpportunityComponent implements OnInit {
   @Input() side: string;
 
-  private _opportunities: Opportunity[] = [];
-  private _opportunities$ = new Subject<Opportunity[]>();
-  opportunities$: Observable<Opportunity[]> = this._opportunities$.asObservable();
+  private _opportunities: Map<number, Opportunity> = new Map();
+  private _opportunities$ = new Subject<Map<number, Opportunity>>();
+  public opportunities$: Observable<Map<number, Opportunity>> = this._opportunities$.asObservable();
 
-  sortType: any = 'multi';
+  public sortType: any = 'multi';
 
   private filterA$ = new BehaviorSubject<string>('');
   private filterB$ = new BehaviorSubject<string>('');
   private filterC$ = new BehaviorSubject<string>('');
 
-  filteredOpportunities$: Observable<Opportunity[]>;
+  public filteredOpportunities$: Observable<Opportunity[]>;
+
+  // Create a Subject for individual record updates:
+  private _recordUpdates$ = new Subject<Opportunity>();
+  public recordUpdates$: Observable<Opportunity> = this._recordUpdates$.asObservable();
 
   constructor(
-    private router: ActivatedRoute,
-    private cookieService: CookieService,
     private socketWebService: SocketWebService,
     private modalService: NgbModal,
     private opportunityModalDataService: OpportunityModalDataService
@@ -42,13 +42,17 @@ export class OpportunityComponent implements OnInit {
     // buy BTC/USD ----- sell MXN/USD  ------ buy MXN/BTC
     // buy BTC/USD ----- sell MXN/USD  ------ sell BTC/MXN
 
-    this._opportunities = [
-      { id: 1, a: { side: "buy", name: "ABC/XYZ", exchange: "KuCoin" }, b: { side: "buy", name: "XYZ/123", exchange: "Kraken" }, c: { side: "buy", name: "123/ABC", exchange: "Kraken" }, volume: 0.05, trade: 300 },
-      { id: 2, a: { side: "buy", name: "ABC/XYZ", exchange: "KuCoin" }, b: { side: "buy", name: "XYZ/345", exchange: "Kraken" }, c: { side: "buy", name: "345/ABC", exchange: "Kraken" }, volume: 0.05, trade: 300 },
-      { id: 4, a: { side: "sell", name: "ABC/XYZ", exchange: "KuCoin" }, b: { side: "sell", name: "XYZ/345", exchange: "Kraken" }, c: { side: "sell", name: "345/ABC", exchange: "Kraken" }, volume: 0.05, trade: 300 },
-      { id: 5, a: { side: "buy", name: "ABC/XYZ", exchange: "Kraken" }, b: { side: "buy", name: "XYZ/ABC", exchange: "Gemini" }, volume: 0.05, trade: 250 },
-      { id: 6, a: { side: "buy", name: "ABC/XYZ", exchange: "Coinbase" }, b: { side: "sell", name: "ABC/XYZ", exchange: "HitBTC" }, volume: 0.05, trade: 200 },
+    const opportunities = [
+      { id: 0, a: { side: "buy", name: "ABC/XYZ", exchange: "KuCoin" }, b: { side: "buy", name: "XYZ/123", exchange: "Kraken" }, c: { side: "buy", name: "123/ABC", exchange: "Kraken" }, volume: 0.05, trade: 300 },
+      { id: 1, a: { side: "buy", name: "ABC/XYZ", exchange: "KuCoin" }, b: { side: "buy", name: "XYZ/345", exchange: "Kraken" }, c: { side: "buy", name: "345/ABC", exchange: "Kraken" }, volume: 0.05, trade: 300 },
+      { id: 2, a: { side: "sell", name: "ABC/XYZ", exchange: "KuCoin" }, b: { side: "sell", name: "XYZ/345", exchange: "Kraken" }, c: { side: "sell", name: "345/ABC", exchange: "Kraken" }, volume: 0.05, trade: 300 },
+      { id: 3, a: { side: "buy", name: "ABC/XYZ", exchange: "Kraken" }, b: { side: "buy", name: "XYZ/ABC", exchange: "Gemini" }, volume: 0.05, trade: 250 },
+      { id: 4, a: { side: "buy", name: "ABC/XYZ", exchange: "Coinbase" }, b: { side: "sell", name: "ABC/XYZ", exchange: "HitBTC" }, volume: 0.05, trade: 200 },
     ];
+
+    for (const o of opportunities) {
+      this._opportunities.set(o.id, o);
+    }
 
     const stringify = (s: Step | undefined): string => {
       return s ? `${s.exchange} ${s.side} ${s.name}` : '';
@@ -64,28 +68,45 @@ export class OpportunityComponent implements OnInit {
       });
     }
 
-    // this.filteredOpportunities$ = combineLatest([this.opportunities$, this.filterA$, this.filterB$, this.filterC$]).pipe(
-    //   map(([opportunities, filterA, filterB, filterC]) =>
-    //     opportunities.filter(o =>
-    //       stringify( o.a ).toLowerCase().includes(filterA.toLowerCase()) &&
-    //       stringify( o.b ).toLowerCase().includes(filterB.toLowerCase()) &&
-    //       stringify( o.c ).toLowerCase().includes(filterC.toLowerCase())
-    //   )
-    //   )
-    // );
+    this.filteredOpportunities$ = combineLatest([
+      this.opportunities$,
+      this.filterA$,
+      this.filterB$,
+      this.filterC$,
+      this.recordUpdates$.pipe(startWith(null))
+    ])
+      .pipe(
+        map(([opportunities, filterA, filterB, filterC, updatedRecord]) => {
+          if (updatedRecord) {
+            const index = opportunities.get(updatedRecord.id);
+            if (index) {
+              opportunities.set(updatedRecord.id, updatedRecord);
+            }
+          }
+          return Array.from(opportunities.values()).filter(o =>
+            matchesTokenFilter(stringify(o.a), filterA) &&
+            matchesTokenFilter(stringify(o.b), filterB) &&
+            matchesTokenFilter(stringify(o.c), filterC)
+          );
+        })
+      );
 
-    this.filteredOpportunities$ = combineLatest([this.opportunities$, this.filterA$, this.filterB$, this.filterC$]).pipe(
-      map(([opportunities, filterA, filterB, filterC]) =>
-        opportunities.filter(o =>
-          matchesTokenFilter(stringify( o.a ), filterA ) &&
-          matchesTokenFilter(stringify( o.b ), filterB ) &&
-          matchesTokenFilter(stringify( o.c ), filterC )
-        )
-      )
-    );
+
+    this.socketWebService.heartbeatCallback.subscribe(serverTime => {
+      const stime = new Date(serverTime);
+      const index = stime.getMilliseconds() % this._opportunities.size;
+
+      var record = this._opportunities.get(index);
+      if (record) {
+        record.trade += 1;
+        this._recordUpdates$.next(record);
+      }
+    });
+
   }
 
   ngOnInit(): void {
+    // It's needed to send the input to the observable asyncronously, no idea why
     setTimeout(() => { this._opportunities$.next(this._opportunities); }, 0);
   }
 

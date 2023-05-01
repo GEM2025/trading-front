@@ -1,3 +1,19 @@
+
+# ngx-datatable  - https://swimlane.gitbook.io/ngx-datatable/
+
+  opportunity component
+  ~/styles.css
+  /* You can add global styles to this file, and also import other style files */
+  @import '../node_modules/@swimlane/ngx-datatable/index.scss';
+  @import '../node_modules/@swimlane/ngx-datatable/themes/bootstrap.scss';
+  @import '../node_modules/@swimlane/ngx-datatable/assets/icons.css';
+
+
+
+-----------------------------------------------------------------------------------------------------
+
+
+
 /home/hcasavantes/snap/code/common/.cache/gio-modules/libgiognomeproxy.so: undefined symbol: g_task_set_name
 Failed to load module: /home/hcasavantes/snap/code/common/.cache/gio-modules/libgiognomeproxy.so
 /home/hcasavantes/snap/code/common/.cache/gio-modules/libgiognutls.so: undefined symbol: g_task_set_name
