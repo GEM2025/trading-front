@@ -28,6 +28,10 @@ export class AuthService {
       const currentUser: User = JSON.parse(json);
       this._isLoggedIn.next(!!currentUser.token);
       this._isAdmin.next(currentUser.role === "ADMIN");
+      console.log(`Constructor for - ${currentUser.email} - role ${currentUser.role}`);
+    }
+    else{
+      console.log("Non json constructor");
     }
   }
 
@@ -39,6 +43,7 @@ export class AuthService {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           console.log(`User successfully logged in - ${user.email} - role ${user.role}`);
           this.cookieService.set('user', JSON.stringify(user), 1, '/');
+          this._isAdmin.next(user.role === "ADMIN");
           this._isLoggedIn.next(true);
         }
 

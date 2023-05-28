@@ -14,31 +14,44 @@
               class="visually-hidden">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/markets" aria-current="page">Markets <span
-              class="visually-hidden">(current)</span></a>
+          <a class="nav-link active" href="/markets" aria-current="page">Markets
+            <span class="visually-hidden">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/symbols" aria-current="page">Symbols <span
-              class="visually-hidden">(current)</span></a>
+          <a class="nav-link active" href="/symbols" aria-current="page">Symbols
+            <span class="visually-hidden">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/currencies" aria-current="page">Currencies <span
-              class="visually-hidden">(current)</span></a>
+          <a class="nav-link active" href="/currencies" aria-current="page">Currencies
+            <span class="visually-hidden">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/exchanges" aria-current="page">Exchanges <span
-              class="visually-hidden">(current)</span></a>
+          <a class="nav-link active" href="/exchanges" aria-current="page">Exchanges
+            <span class="visually-hidden">(current)</span></a>
         </li>
-        <div *ngIf="authService.isAdmin$ | async">
-        <li class="nav-item">
-          <a class="nav-link active" href="/users" aria-current="page">Users <span
-              class="visually-hidden">(current)</span></a>
+        <li *ngIf="authService.isAdmin$ | async" class="nav-item">
+          <a class="nav-link" href="/admin" aria-current="page">Admin
+            <span class="visually-hidden">(current)</span></a>
         </li>
-      </div>
-        <li class="nav-item">
+
+        <li *ngIf="authService.isAdmin$ | async" class="nav-item">
+          <a class="nav-link" href="/users" aria-current="page">Users
+            <span class="visually-hidden">(current)</span></a>
+        </li>
+        <li *ngIf="authService.isAdmin$ | async" class="nav-item">
           <a class="nav-link" href="/debug" aria-current="page">Debug <span class="visually-hidden">(current)</span></a>
         </li>
+
       </ul>
+    </div>
+    <div class="dropdown dropleft">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        User Menu
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button class="dropdown-item" >Settings</button>
+        <button class="dropdown-item" (click)="logout()">Logout</button>
+      </div>
     </div>
   </div>
 </nav>
@@ -53,7 +66,8 @@
       &nbsp;
     </div>
     <div class="mt-3">
-      <button class="btn btn-sm btn-secondary btn-success d-block text-start mb-3" type="button" (click)="logout()" data-bs-dismiss="offcanvas">
+      <button class="btn btn-sm btn-secondary btn-success d-block text-start mb-3" type="button" (click)="logout()"
+        data-bs-dismiss="offcanvas">
         Logout
       </button>
 
