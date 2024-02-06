@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   error = '';
 
   // Define form title and subtitle
-  title: string = 'CTX';
+  title: string = 'GEM';
   subtitle: string = 'Register Account';
   subtitle2: string = "Provide your details to register";
 

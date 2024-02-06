@@ -31,19 +31,19 @@ https://www.youtube.com/watch?v=05mhsj4XPso
 
 Quick setup — if you’ve done this kind of thing before
 or
-https://github.com/develHector/condor-frontend.git
+https://github.com/develHector/GEM2025/trading-front.git
 Get started by creating a new file or uploading an existing file. We recommend every repository include a README, LICENSE, and .gitignore.
 
 …or create a new repository on the command line
-echo "# condor-frontend" >> README.md
+echo "# frontend" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
 git branch -M master
-git remote add origin https://github.com/develHector/condor-frontend.git
+git remote add origin https://github.com/develHector/GEM2025/trading-front.git
 git push -u origin master
 …or push an existing repository from the command line
-git remote add origin https://github.com/develHector/condor-frontend.git
+git remote add origin https://github.com/develHector/GEM2025/trading-front.git
 git branch -M main
 git push -u origin main
 …or import code from another repository

@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./password.component.css']
 })
 export class PasswordComponent implements OnInit {
-  title: string = 'CTX';
+  title: string = 'GEM';
   subtitle: string = 'Forgot Password';
 
   passwordForm: FormGroup;

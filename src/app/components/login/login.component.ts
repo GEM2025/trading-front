@@ -9,13 +9,14 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  title: string = 'CTX';
-  subtitle: string = 'Condor Trading Exchange';
+  title: string = 'GEM';
+  subtitle: string = 'Global Equity Markets';
+  sub2title: string = 'Trading Platform';
   loginForm: FormGroup;
   loading: boolean = false;
   submitted: boolean = false;
   error: string = "";
-
+  
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
