@@ -58,3 +58,8 @@ But you can specify a different directory
 # ng generate component components/xyz
 
 
+---
+Angular 17 Signals
+(Set in home page)
+https://www.youtube.com/watch?v=d0IjEcRmNL4
+

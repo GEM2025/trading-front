@@ -1,6 +1,7 @@
 <p class="fw-vold">Home {{ room }}</p>
 
 <div class="row justify-content-center align-items-center g-2">
+  
   <app-opportunity [side]="'All'"></app-opportunity>
   <!-- <div class="col">
     <app-opportunity [side]="'Buy'"></app-opportunity>
@@ -30,4 +31,27 @@
 </div> -->
 <br />
 
+<!------------------------------------------------------------------>
+
+<div>
+  <p>Angular 17 Signals sample - Orders Blotter:</p>
+  <button class="btn btn-primary" (click)="addOrder(true)">Add Status Order</button>  
+  &nbsp;
+  <button class="btn btn-primary" (click)="addOrder(false)">Add Non-Status Order</button>
+  <br />
+  <!-- present the total volume and notional of status orders and all orders as well -->
+  <p>Total Volume: {{ totalVolume() }} Total Notional: {{ totalNotional() }}</p>
+  <p>Total Status Volume: {{ totalStatusVolume() }} Total Notional: {{ totalStatusNotional() }}</p>
+  
+  <ul>
+    @for (orders of statusOrders(); track $index) {      
+      <li>Order Id: {{ orders.id }} - {{ orders.side }} - {{ orders.quantity }} - {{ orders.price }} - {{ orders.status }}</li>          
+    }
+  </ul>    
+</div>
+
+<!------------------------------------------------------------------>
+
+
+<br />
 <p *ngIf="ServerTime">Server Time {{ ServerTime | date: 'fullTime' }}</p>

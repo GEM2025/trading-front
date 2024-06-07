@@ -1,7 +1,7 @@
 
 <div *ngIf="filteredOpportunities$; else templateNo" class="main-body">
 
-  <p>{{ side }} side opportunities</p>
+  <p>{{ side }} side opportunities...</p>
   <ngx-datatable class="bootstrap" [rows]="filteredOpportunities$ | async" [columnMode]="'force'" [headerHeight]="50"
     [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [sortType]="sortType" [sorts]="[{prop: 'name'}]">
 
